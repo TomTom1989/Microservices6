@@ -1,13 +1,13 @@
-Spring Cloud Gateway:
+Securing Microservices endpoint with Keycloak + Token access propagation:
 
-1) Implementing service gateway using Spring Cloud Gateway with configuration in gateway-server.yml in the configuration server.
+Steps:
+1) Configuring SecurityConfig class with KeycloakWebSecurityConfigurerAdapter
+2) Configuring Keycloak from Docker (old version of Keycloak)
+3) All services dockerized and running within Docker-compose (Resources server, Eureka service, API gateway, postgres database, JBoss/Keycloak)
+4) Using keycloak token endpoint to generate Token access
+5) Access endpoint: got issue with Unauthorized 401
+6) Propagating token access: got issue with Unauthorized 401
 
-2) Registering gateway service to Eureka discovery service and mapping all services (checking all the mappings in http://localhost:8072/actuator/gateway/routes)
 
-3) Created custom predicates in gateway-service.yml ( Having i.e http://localhost:8072/licensing-service/license/{organizationID} instead of http://localhost:8080/v1/organization/[organizationID}/license/ )
-
-4) Created TrackingFilter/FilterUtils (PRE-FILTERS) classes in gateway service to automatically create and add correlation ID in the header after each HTTP request trough gateway endpoint.
-
-5) Created UserContextFilter/UserContext/UserContextHolder/UserContextInterceptor for correlation ID propagation between microservices.
-
-6) Created then response -filter class (POST-FILTER) to get all the info from the headers back to the client (correlation ID returned in the HTTP response). Checked it using Postman tool.
+Used here old version of Keycloak server with old version of Maven (version 2.2.5) when I was starting to implement the OAuth2 process flow. 
+However, I have successfully implemented the same OAuth2 process with the newest Spring Authorization server with Token propagation between service with one of the newest Maven version (Repo: Spring_Authorization_server-OAuth2_MVC)
